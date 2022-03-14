@@ -1,0 +1,30 @@
+#If WinActive("SultryStrings ahk_class AutoHotkeyGUI") 
+:*b0:eh::
+RunWait, "C:\Program Files (x86)\Notepad++\notepad++.exe" "%hotstringsPath%"
+txtTohotstrings()
+Reload
+return
+
+:*b0:em::
+RunWait, "C:\Program Files (x86)\Notepad++\notepad++.exe" "%multilineMacros%"
+parseMultlineMacros()
+Reload
+return
+
+:*b0:ahk::
+Gosub, Prestuff
+Run Autohotkey ;runs autohotkey help
+Gosub, Poststuff
+return
+
+:*b0:nt::
+Gosub, Prestuff
+Run C:\Program Files (x86)\Notepad++\notepad++.exe
+Gosub, Poststuff
+return
+
+:*b0:clr:: ;Reset sultrystrings
+Gosub, Prestuff
+FileDelete, %dynamictxtPath%
+Gosub, Poststuff
+return
