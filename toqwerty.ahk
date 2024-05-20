@@ -58,7 +58,7 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 +!O::Send Ö
 !u::Send ü
 +!U::Send Ü
-!`s::Send ß
+!s::Send ß
 
 ; Quick reference: https://www.autohotkey.com/docs/commands/Send.htm#keynames
 !'::Send {U+0323} ; Dot below
