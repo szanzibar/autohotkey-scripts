@@ -6,7 +6,13 @@
 ; Chrome library: https://github.com/G33kDude/Chrome.ahk
 ; Chrome ported to v2 from here: https://github.com/thqby/ahk2_lib/blob/master/Chrome.ahk
 
-myURL := "https://photos.google.com/share/AF1QipPIAdCcVmE_Lst59IK-Xyq_OC-RxSuw0pMtYyAM88sgEkewF2mo9PUSrnmFXj2AKg"
+if A_Args.Length != 1
+	{
+		MsgBox "Google photos url must be passed as an argument."
+		ExitApp
+	}
+myURL := A_Args[1]
+
 ChromeProfilePath := A_AppData "\Google\Chrome\User Data"
 ChromeInstance := Chrome(,,,, ChromeProfilePath)
 PageInstance := ChromeInstance.NewPage()
