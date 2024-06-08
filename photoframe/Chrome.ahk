@@ -31,7 +31,7 @@ class Chrome {
 		if !ChromePath
 			try FileGetShortcut A_StartMenuCommon '\Programs\Chrome.lnk', &ChromePath
 			catch
-				ChromePath := RegRead('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\Chrome.exe',,
+				ChromePath := RegRead('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\Chrome.exe', ,
 					'C:\Program Files (x86)\Google\Chrome\Application\Chrome.exe')
 		if !FileExist(ChromePath) && !FileExist(ChromePath := 'C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe')
 			throw Error('Chrome/Edge could not be found')
@@ -108,7 +108,10 @@ class Chrome {
 
 	NewPage(url := 'about:blank', fnCallback?) {
 		http := Chrome._http
-		http.Open('PUT', 'http://127.0.0.1:' this.DebugPort '/json/new?' url), http.Send()
+		http.Open('PUT', 'http://127.0.0.1:' this.DebugPort '/json/new?' url)
+		Sleep 500
+		http.Send()
+		Sleep 500
 		if ((PageData := JSON.parse(http.responseText)).Has('webSocketDebuggerUrl'))
 			return Chrome.Page(StrReplace(PageData['webSocketDebuggerUrl'], 'localhost', '127.0.0.1'), fnCallback?)
 	}
@@ -138,7 +141,7 @@ class Chrome {
 	 * Returns a connection to the debug interface of a page that matches the
 	 * provided criteria. When multiple pages match the criteria, they appear
 	 * ordered by how recently the pages were opened.
-	 *
+	 * 
 	 * Key        - The key from the page list to search for, such as 'url' or 'title'
 	 * Value      - The value to search for in the provided key
 	 * MatchMode  - What kind of search to use, such as 'exact', 'contains', 'startswith', or 'regex'
